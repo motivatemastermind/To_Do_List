@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<header>
+  <div class="banner">
+    <a href="/">
+      <img src="/static/logo.png" style="width: 245px; height: 220px;" alt="Logo">
+    </a>
+    <nav>
+      <ul>
+        <li><a href="https://www.tiktok.com/@motivatemastermind">TikTok</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div class="list">
+    <!-- to-do list code goes here -->
+	<h1>To-Do List for {{ year }}</h1>
+    <ul>
+        {% for item in to_do_list %}
+        <li>
+            {% if item.completion_status %}
+            <strike>{{ item.name }}</strike>
+            {% else %}
+            {{ item.name }}
+            {% endif %}
+            <ul>
+                <li>{{ item.description }}</li>
+            </ul>
+            <form action="/complete/{{ loop.index0 }}" method="get">
+                <input type="submit" value="Complete">
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+  </div>
+  <div class="interactive">
+    <!-- interactive code goes here -->
+	<h2>Add New Item</h2>
+    <form action="/" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required><br>
+
+        <input type="submit" value="Add Item">
+    </form>
+  </div>
+</div>
+  <footer>
+    <p>&copy; {{ year }} To-Do List App</p>
+  </footer>
+</body>
+</html>
